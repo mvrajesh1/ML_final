@@ -227,7 +227,7 @@ plt.xlabel("PCA Dims")
 plt.ylabel("Correct rate")
 
 
-# In[41]:
+# In[42]:
 
 
 confusion_matrix_n=[]
@@ -236,7 +236,7 @@ from sklearn import metrics
 for i in range(0,9):
     confusion_matrix_n.append(confusion_matrix(TT,T_prediction[i]))
     report_n.append(metrics.classification_report(TT,T_prediction[i]))
-    print("\nPCA to "+str(i) + " Dim\n")
+    print("\nPCA to "+str(i+1) + " Dim\n")
     print("confusion_matrix\n")
     print(confusion_matrix_n[i])
     print("\nreport\n")
