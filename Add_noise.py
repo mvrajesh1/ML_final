@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[210]:
+# In[266]:
 
 
 import struct
@@ -63,7 +63,7 @@ def plotP1P2(XX, TT):
     from matplotlib import cm
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111)
-    ax.set_title("Son Tran - 2 VS 7, Reduced data 784 -> 2", fontsize=14)
+    ax.set_title(" 2 VS 7, Reduced data 784 -> 2", fontsize=14)
     ax.set_xlabel("2: Blue          7: Red", fontsize=12)
     ax.grid(True, linestyle='-', color='0.75')
     zz = np.random.random(len(XX[TT == 1][:, 0]))
@@ -83,7 +83,7 @@ def cal_prob(T_predict,TT):
     return (count1/TT.shape[0])
 
 
-# In[164]:
+# In[267]:
 
 
 X, T = load_mnist(dataset="training", selecteddigits=[2, 7])
@@ -99,7 +99,7 @@ for row in range(nrows):
 plt.show()
 
 
-# In[166]:
+# In[268]:
 
 
 print("100th label is " +str(T[100]))
@@ -109,7 +109,7 @@ vectortoimg(X[100])
 vectortoimg(X[82])
 
 
-# In[201]:
+# In[269]:
 
 
 #add noise
@@ -123,7 +123,7 @@ vectortoimg(X_noise[100])
 vectortoimg(X_noise[82])
 
 
-# In[250]:
+# In[270]:
 
 
 #normal
@@ -143,20 +143,20 @@ plotP1P2(X_pca_noise, TT)
 
 # Check accuracy Step
 
-# In[251]:
+# In[271]:
 
 
 Xtest, Ttest = load_mnist(dataset="testing", selecteddigits=[2, 7])
 
 
-# In[258]:
+# In[272]:
 
 
 reduced_data_pca_test = pca.fit_transform(Xtest)
 reduced_data_pca_test_noise = pca.fit_transform(X_pca_noise)
 
 
-# In[263]:
+# In[273]:
 
 
 #Gaussian Naive_bayes without noise
@@ -169,7 +169,7 @@ prob_gnb = cal_prob(T_out,Ttest)
 prob_gnb
 
 
-# In[264]:
+# In[274]:
 
 
 #Gaussian Naive_bayes with noise
@@ -178,7 +178,7 @@ prob_gnb_noise = cal_prob(T_out_noise,Ttest)
 prob_gnb_noise
 
 
-# In[265]:
+# In[275]:
 
 
 #Train new model with noise data
