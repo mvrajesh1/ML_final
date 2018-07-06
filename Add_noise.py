@@ -178,14 +178,16 @@ prob_gnb_noise = cal_prob(T_out_noise,Ttest)
 prob_gnb_noise
 
 
-# In[275]:
+# In[278]:
 
 
 #Train new model with noise data
 
+#Don't know why didn't improve 
+
 gnb_noise = GaussianNB()
 gnb_noise.fit(X_pca_noise,TT)
-T_out_new_noise_model = gnb_noise.predict(reduced_data_pca_test)
+T_out_new_noise_model = gnb_noise.predict(reduced_data_pca_test_noise)
 prob_gnb__new_noise_model = cal_prob(T_out_new_noise_model,Ttest)
 prob_gnb__new_noise_model
 
