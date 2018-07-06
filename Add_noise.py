@@ -191,3 +191,39 @@ T_out_new_noise_model = gnb_noise.predict(reduced_data_pca_test_noise)
 prob_gnb__new_noise_model = cal_prob(T_out_new_noise_model,Ttest)
 prob_gnb__new_noise_model
 
+
+# In[285]:
+
+
+# LogisticRegression
+
+from sklearn.linear_model import LogisticRegression
+
+lr = LogisticRegression()
+lr.fit(reduced_data_pca,TT)
+T_lr=lr.predict(reduced_data_pca_test)
+
+prob_lr= cal_prob(T_lr,Ttest)
+prob_lr
+
+
+# In[286]:
+
+
+T_lr_noise=lr.predict(reduced_data_pca_test_noise)
+
+prob_lr_noise= cal_prob(T_lr_noise,Ttest)
+prob_lr_noise
+
+
+# In[288]:
+
+
+#Train new model with noise data and LogisticRegression
+
+lr2 = LogisticRegression()
+lr2.fit(X_pca_noise,TT)
+T_lr2=lr2.predict(reduced_data_pca_test)
+prob_lr2= cal_prob(T_lr2,Ttest)
+prob_lr2
+
