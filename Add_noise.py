@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[266]:
+# In[292]:
 
 
 import struct
@@ -83,7 +83,7 @@ def cal_prob(T_predict,TT):
     return (count1/TT.shape[0])
 
 
-# In[267]:
+# In[293]:
 
 
 X, T = load_mnist(dataset="training", selecteddigits=[2, 7])
@@ -99,7 +99,7 @@ for row in range(nrows):
 plt.show()
 
 
-# In[268]:
+# In[294]:
 
 
 print("100th label is " +str(T[100]))
@@ -109,7 +109,7 @@ vectortoimg(X[100])
 vectortoimg(X[82])
 
 
-# In[269]:
+# In[295]:
 
 
 #add noise
@@ -123,7 +123,7 @@ vectortoimg(X_noise[100])
 vectortoimg(X_noise[82])
 
 
-# In[270]:
+# In[296]:
 
 
 #normal
@@ -136,30 +136,36 @@ plotP1P2(reduced_data_pca, TT)
 
 #noise
 print("Noise_PCA")
-X_pca_noise = pca.fit_transform(X_noise)
+pca2 = PCA(n_components=2)
+X_pca_noise = pca2.fit_transform(X_noise)
 plotP1P2(X_pca_noise, TT)
 
+#noise with original matrix
+print("Noise_PCA with original matrix")
+X_pca_noise = pca.transform(X_noise)
+plotP1P2(X_pca_noise, TT)
 
 
 # Check accuracy Step
 
-# In[271]:
+# In[298]:
 
 
 Xtest, Ttest = load_mnist(dataset="testing", selecteddigits=[2, 7])
 
 
-# In[272]:
+# In[299]:
 
 
 reduced_data_pca_test = pca.fit_transform(Xtest)
-reduced_data_pca_test_noise = pca.fit_transform(X_pca_noise)
+reduced_data_pca_test_noise = pca2.fit_transform(Xtest+noise)
 
 
-# In[273]:
+# In[300]:
 
 
 #Gaussian Naive_bayes without noise
+
 from sklearn.naive_bayes import GaussianNB
 gnb = GaussianNB()
 gnb.fit(reduced_data_pca,TT)
@@ -169,7 +175,7 @@ prob_gnb = cal_prob(T_out,Ttest)
 prob_gnb
 
 
-# In[274]:
+# In[301]:
 
 
 #Gaussian Naive_bayes with noise
@@ -178,12 +184,10 @@ prob_gnb_noise = cal_prob(T_out_noise,Ttest)
 prob_gnb_noise
 
 
-# In[278]:
+# In[302]:
 
 
 #Train new model with noise data
-
-#Don't know why didn't improve 
 
 gnb_noise = GaussianNB()
 gnb_noise.fit(X_pca_noise,TT)
@@ -192,7 +196,7 @@ prob_gnb__new_noise_model = cal_prob(T_out_new_noise_model,Ttest)
 prob_gnb__new_noise_model
 
 
-# In[285]:
+# In[303]:
 
 
 # LogisticRegression
@@ -207,7 +211,7 @@ prob_lr= cal_prob(T_lr,Ttest)
 prob_lr
 
 
-# In[286]:
+# In[304]:
 
 
 T_lr_noise=lr.predict(reduced_data_pca_test_noise)
@@ -216,7 +220,7 @@ prob_lr_noise= cal_prob(T_lr_noise,Ttest)
 prob_lr_noise
 
 
-# In[288]:
+# In[305]:
 
 
 #Train new model with noise data and LogisticRegression
@@ -226,4 +230,14 @@ lr2.fit(X_pca_noise,TT)
 T_lr2=lr2.predict(reduced_data_pca_test)
 prob_lr2= cal_prob(T_lr2,Ttest)
 prob_lr2
+
+
+# In[309]:
+
+
+#noise
+print("Noise_PCA with original matrix")
+X_noise2 = pca.transform()
+X_pca_noise_2 = pca.transform(X_noise)
+plotP1P2(X_pca_noise_2, TT)
 
